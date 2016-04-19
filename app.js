@@ -4,10 +4,18 @@ For one to be able to use express, you need to install it as a dependency using
 */
 var express = require('express');
 var app = express();
+//set the view engine using either of the templating languages eg jade, ejs
+app.set('view engine', 'ejs');
+//To set your own folder where the views will be retrieved
+// app.set('views', _dirname + '/partials');
+
 //Telling the express app what to do when a request to the homepage is made
-//This technique is called routing
+//This technique is called routing.
 app.get('/', function(req, res){
-  res.send('<h1>Hello Express</h1>');
+  res.render('default', {
+    title: 'Home',
+    users: ['Corn', 'Shaz', 'Noma']
+  });
 });
 //different route
 app.get('/me', function(req, res){
@@ -16,7 +24,7 @@ app.get('/me', function(req, res){
 //Passing variables in the routes which can be displayed on the webpage
 app.get('/who/:name?', function(req, res){
   var name = req.params.name;
-    res.send('<h1>'+ name + ' was here!!</h1>');
+  res.send('<h1>'+ name + ' was here!!</h1>');
 });
 /*
 * You can also pass multiple variables in the routes that will be displayed
@@ -31,7 +39,7 @@ If you put a route that is not specified, then the following action will take pl
 Kindly put this at the end after all the routes.
 */
 app.get('*', function(req, res){
-  res.send('Pole sana, umepotea. Jaribu kwingine');
+  res.send('Pole sana, umepotea. Jaribu kwingine!!');
 });
 //Server to listen from port 3000
 var server = app.listen(3000, function(){
